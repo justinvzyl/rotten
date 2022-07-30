@@ -13,7 +13,7 @@ type Db = Arc<Mutex<HashMap<String, Vec<Peer>>>>;
 
 ///  Run the rotten server.
 ///
-/// Accepts UDP connections from the provided listener. For each inbound
+/// Accepts UDP `connections` from the provided listener. For each inbound
 /// dgram, a task is spawned to handle that dgram. The server
 /// runs until the `shutdown` future completes, after which the server
 /// will shut down gracefully
@@ -143,6 +143,7 @@ impl Handler {
             } => {
                 // obtain a lock to the db
                 let mut db = self.db.lock().unwrap();
+                // get all available peers
                 let peers = match db.get(&info_hash) {
                     Some(values) => values,
                     None => {
