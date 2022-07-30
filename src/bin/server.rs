@@ -17,11 +17,11 @@ async fn main() -> rotten::Result<()> {
     tracing::subscriber::set_global_default(subscriber).expect("setting default subscriber failed");
 
     // Bind a UDP listener
-    let listener = UdpSocket::bind(&format!("127.0.0.1:{}", DEFAULT_PORT)).await?;
+    let socket = UdpSocket::bind(&format!("127.0.0.1:{}", DEFAULT_PORT)).await?;
 
     // run the server
     info!("listening on 127.0.0.1:{}", DEFAULT_PORT);
-    server::run(listener, signal::ctrl_c()).await;
+    server::run(socket, signal::ctrl_c()).await;
 
     Ok(())
 }
